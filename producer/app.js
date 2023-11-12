@@ -1,4 +1,18 @@
+const express = require("express")
+const app = express();
+const cors = require("cors")
 const amqp = require('amqplib');
+require("dotenv").config()
+
+// importing middlewares
+app.use(express.json())
+app.use(cors())
+
+const port = process.env.PORT || 2002
+app.listen(port,()=>{
+  console.log('app listening on port '+port+'...')
+})
+
 
 async function produceMessage() {
   const connection = await amqp.connect('amqp://localhost');
@@ -16,5 +30,3 @@ async function produceMessage() {
     connection.close();
   }, 500);
 }
-
-produceMessage();
