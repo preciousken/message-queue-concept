@@ -14,6 +14,11 @@ app.listen(port,()=>{
 })
 
 
+
+app.all("*",(req,res)=>{
+  res.send("Just like that, you completely missed your way")
+})
+
 async function produceMessage() {
   const connection = await amqp.connect('amqp://localhost');
   const channel = await connection.createChannel();
