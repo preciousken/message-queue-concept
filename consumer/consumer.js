@@ -17,7 +17,8 @@ app.listen(port,()=>{
 
 // message queue for sending of emails
 async function emailConsumer() {
-  const connection = await amqp.connect('amqp://localhost');
+  try {
+    const connection = await amqp.connect('amqp://localhost');
   const channel = await connection.createChannel();
   const queue = 'sendemail';
 
@@ -35,6 +36,9 @@ async function emailConsumer() {
     channel.ack(msg);
 
   });
+  } catch (error) {
+    console.log('.....',error)
+  }
 }
 emailConsumer()
 
