@@ -27,7 +27,7 @@ try {
   // declare a queue
   await channel.assertQueue(body.queueId);
   // Send message to the queue
-  channel.sendToQueue(body.queueId, Buffer.from(body.data));
+  channel.sendToQueue(body.queueId, Buffer.from(JSON.stringify(body.data)));
 
     return res.status(200).json({
         status:true,

@@ -15,25 +15,27 @@ app.listen(port,()=>{
 })
 
 
+// message queue for sending of emails
 async function emailConsumer() {
   const connection = await amqp.connect('amqp://localhost');
   const channel = await connection.createChannel();
-  const queue = 'task_queue';
+  const queue = 'sendemail';
 
   await channel.assertQueue(queue, { durable: true });
   channel.prefetch(1);
 
-  console.log(`Waiting for messages. To exit, press CTRL+C`);
+  // message queue starts waiting here for incoming messages
 
   channel.consume(queue, (msg) => {
-    const message = msg.content.toString();
-    console.log(`Received message: ${message}`);
 
-    // Simulate task processing
-    setTimeout(() => {
-      console.log(`Task completed: ${message}`);
-      channel.ack(msg);
-    }, 1000);
+    const data = msg.content.toString();
+    const {message} = JSON.parse(data)
+
+    console.log(message)
+    channel.ack(msg);
+
   });
 }
 emailConsumer()
+
+
