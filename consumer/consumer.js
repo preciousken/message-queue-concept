@@ -32,7 +32,10 @@ async function emailConsumer() {
     const data = msg.content.toString();
     const {message,receiverEmail} = JSON.parse(data)
 
-    // insert your function here to send {message} to {receiverEmail}
+    /**
+     * @param 
+     * insert your function here to send {message} to {receiverEmail}
+     */
     
     channel.ack(msg);
 
