@@ -14,7 +14,7 @@ app.listen(port,()=>{
 })
 
 
-async function consumeMessage() {
+async function emailConsumer() {
   const connection = await amqp.connect('amqp://localhost');
   const channel = await connection.createChannel();
   const queue = 'task_queue';
@@ -35,4 +35,4 @@ async function consumeMessage() {
     }, 1000);
   });
 }
-
+emailConsumer()
