@@ -2,6 +2,7 @@ const express = require("express")
 const app = express();
 const cors = require("cors")
 const amqp = require('amqplib');
+const { queueEmail } = require("./queues/emailQueue");
 require("dotenv").config();
 
 // importing middlewares
@@ -31,30 +32,18 @@ try {
     })
   }
 
+  // send a response then proceed with your quues
   res.status(200).json({
     status:true,
     message:"Data queued successfully",
   })
 
-  const connection = await amqp.connect('amqp://localhost');
-  const channel = await connection.createChannel();
-  const queue = 'task_queue';
+  // queue Emails
+  if(body.queueId === "sendemail"){
+    await queueEmail(body.queueId,body.data)
+  }
 
-  await channel.assertQueue(queue, { durable: true });
-  channel.prefetch(1);
 
-  console.log(`Waiting for messages. To exit, press CTRL+C`);
-
-  channel.consume(queue, (msg) => {
-    const message = msg.content.toString();
-    console.log(`Received message: ${message}`);
-
-    // Simulate task processing
-    setTimeout(() => {
-      console.log(`Task completed: ${message}`);
-      channel.ack(msg);
-    }, 1000);
-  });
 
 } catch (error) {
   console.log(error)
