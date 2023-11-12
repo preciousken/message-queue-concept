@@ -30,9 +30,10 @@ async function emailConsumer() {
   channel.consume(queue, (msg) => {
 
     const data = msg.content.toString();
-    const {message} = JSON.parse(data)
+    const {message,receiverEmail} = JSON.parse(data)
 
-    console.log(message)
+    // insert your function here to send {message} to {receiverEmail}
+    
     channel.ack(msg);
 
   });
