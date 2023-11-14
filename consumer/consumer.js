@@ -31,6 +31,7 @@ async function emailConsumer() {
 
     const data = msg.content.toString();
     const {message,receiverEmail} = JSON.parse(data)
+    console.log(message)
 
     /**
      * @param 
