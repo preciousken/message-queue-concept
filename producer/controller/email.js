@@ -1,5 +1,6 @@
 
 const amqp = require('amqplib');
+require("dotenv").config();
 
 const sendEmail = async (req,res,next) =>{
 try {
@@ -21,7 +22,7 @@ try {
 
 
     // Connect to RabbitMQ
-  const connection = await amqp.connect('amqp://localhost');
+  const connection = await amqp.connect(process.env.MESSAGE_QUEUE_URL);
   const channel = await connection.createChannel();
 
   // declare a queue

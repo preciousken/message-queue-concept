@@ -2,7 +2,7 @@ const express = require("express")
 const app = express();
 const cors = require("cors")
 const amqp = require('amqplib');
-const { queueEmail } = require("./queues/emailQueue");
+// const { queueEmail } = require("./queues/emailQueue");
 require("dotenv").config();
 
 // importing middlewares
@@ -18,7 +18,7 @@ app.listen(port,()=>{
 // message queue for sending of emails
 async function emailConsumer() {
   try {
-    const connection = await amqp.connect('amqp://localhost');
+    const connection = await amqp.connect(process.env.MESSAGE_QUEUE_URL);
   const channel = await connection.createChannel();
   const queue = 'sendemail';
 
