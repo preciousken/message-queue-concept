@@ -18,7 +18,7 @@ app.listen(port,()=>{
 // message queue for sending of emails
 async function emailConsumer() {
   try {
-    const connection = await amqp.connect(process.env.MESSAGE_QUEUE_URL);
+    const connection = await amqp.connect(process.env.LOCAL_MESSAGE_QUEUE_URL);
   const channel = await connection.createChannel();
   const queue = 'sendemail';
 

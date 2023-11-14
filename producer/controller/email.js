@@ -22,7 +22,7 @@ try {
 
 
     // Connect to RabbitMQ
-  const connection = await amqp.connect(process.env.MESSAGE_QUEUE_URL);
+  const connection = await amqp.connect(process.env.LOCAL_MESSAGE_QUEUE_URL);
   const channel = await connection.createChannel();
 
   // declare a queue
